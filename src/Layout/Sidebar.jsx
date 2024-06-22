@@ -1,8 +1,19 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import avatar from "../assets/images/my-avatar.png";
+import { FaCalendarAlt, FaFacebook } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+import { IoPhonePortraitOutline } from 'react-icons/io5';
+import { MdEmail } from 'react-icons/md';
 
-const Sidebar = () => {
+
+const Sidebar = ({getDatas}) => {
+  const personalinfo = getDatas.users[0]
+
+  const date = new Date(personalinfo.birthday);
+  const formattedDate = date.toLocaleDateString().slice(0, 16);
   return (
     <aside className="sidebar" data-sidebar>
       <div className="sidebar-info">
@@ -11,8 +22,9 @@ const Sidebar = () => {
         </figure>
 
         <div className="info-content">
-          <h1 className="name" title="Richard hanrick">Richard hanrick</h1>
-          <p className="title">Web developer</p>
+          <h1 className="name" title="Richard hanrick">{personalinfo.name}</h1>
+          <p className="title">
+            {personalinfo.positions.map(item => item)}</p>
         </div>
 
         <button className="info_more-btn" data-sidebar-btn>
@@ -27,41 +39,41 @@ const Sidebar = () => {
         <ul className="contacts-list">
           <li className="contact-item">
             <div className="icon-box">
-              <ion-icon name="mail-outline"></ion-icon>
+              <MdEmail name="mail-outline"/>
             </div>
             <div className="contact-info">
               <p className="contact-title">Email</p>
-              <a href="mailto:richard@example.com" className="contact-link">richard@example.com</a>
+              <a href={`mailto:${personalinfo.email}`} className="contact-link">{personalinfo.email}</a>
             </div>
           </li>
 
           <li className="contact-item">
             <div className="icon-box">
-              <ion-icon name="phone-portrait-outline"></ion-icon>
+              <IoPhonePortraitOutline name="phone-portrait-outline"/>
             </div>
             <div className="contact-info">
               <p className="contact-title">Phone</p>
-              <a href="tel:+12133522795" className="contact-link">+1 (213) 352-2795</a>
+              <a href={`tel:${personalinfo.phone}`} className="contact-link">{personalinfo.phone}</a>
             </div>
           </li>
 
           <li className="contact-item">
             <div className="icon-box">
-              <ion-icon name="calendar-outline"></ion-icon>
+              <FaCalendarAlt name="calendar-outline"/>
             </div>
             <div className="contact-info">
               <p className="contact-title">Birthday</p>
-              <time dateTime="1982-06-23">June 23, 1982</time>
+              <time dateTime="1997-08-07">{formattedDate}</time>
             </div>
           </li>
 
           <li className="contact-item">
             <div className="icon-box">
-              <ion-icon name="location-outline"></ion-icon>
+              <FaLocationDot name="location-outline"/>
             </div>
             <div className="contact-info">
               <p className="contact-title">Location</p>
-              <address>Sacramento, California, USA</address>
+              <address>{personalinfo.location}</address>
             </div>
           </li>
         </ul>
@@ -70,18 +82,18 @@ const Sidebar = () => {
 
         <ul className="social-list">
           <li className="social-item">
-            <a href="#" className="social-link">
-              <ion-icon name="logo-facebook"></ion-icon>
+            <a href={personalinfo.facebookUrl} className="social-link">
+              <FaFacebook name="logo-facebook"/>
             </a>
           </li>
           <li className="social-item">
-            <a href="#" className="social-link">
-              <ion-icon name="logo-twitter"></ion-icon>
+            <a href={personalinfo.instagramUrl} className="social-link">
+              <FaInstagram name="logo-twitter"/>
             </a>
           </li>
           <li className="social-item">
-            <a href="#" className="social-link">
-              <ion-icon name="logo-instagram"></ion-icon>
+            <a href={personalinfo.linkedinUrl} className="social-link">
+              <FaLinkedin name="logo-instagram"/>
             </a>
           </li>
         </ul>
