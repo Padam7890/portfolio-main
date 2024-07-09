@@ -70,6 +70,7 @@ const About = () => {
       {/* <!--
       - testimonials
     --> */}
+    
 
       <section className="testimonials">
         <h3 className="h3 testimonials-title">Testimonials</h3>

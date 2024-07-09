@@ -16,14 +16,21 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [usersResponse, skillResponse, testimonialsResponse] = await Promise.all([
+        const [usersResponse, skillResponse, resumeResponse, testimonialsResponse,categoryResponse] = await Promise.all([
           axios.get("http://127.0.0.1:3000/api/users/user"),
           axios.get("http://127.0.0.1:3000/api/skills"),
-          axios.get("http://127.0.0.1:3000/api/testimonials"),]);
+          axios.get("http://127.0.0.1:3000/api/resume"),
+          axios.get("http://127.0.0.1:3000/api/testimonials"),
+          axios.get("http://127.0.0.1:3000/api/portfolio/category"),
+
+        ]);
+
         setData({
           users: usersResponse.data.data,
           skills: skillResponse.data.data,
+          resume: resumeResponse.data.data,
           testimonials: testimonialsResponse.data,
+          category: categoryResponse.data.data,
         });
         setIsLoading(false);
       } catch (err) {
