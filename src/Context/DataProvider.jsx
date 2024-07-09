@@ -17,12 +17,13 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [usersResponse, skillResponse, resumeResponse, testimonialsResponse,categoryResponse] = await Promise.all([
+        const [usersResponse, skillResponse, resumeResponse, testimonialsResponse,categoryResponse, skillPercentage] = await Promise.all([
           http.get("/api/users/user"),
           http.get("/api/skills"),
           http.get("/api/resume"),
           http.get("/api/testimonials"),
           http.get("/api/portfolio/category"),
+          http.get("/api/skills/skillpercentage"),
 
         ]);
 
@@ -32,6 +33,7 @@ export const DataProvider = ({ children }) => {
           resume: resumeResponse.data.data,
           testimonials: testimonialsResponse.data,
           category: categoryResponse.data.data,
+          skillPercentage: skillPercentage.data.data,
         });
         setIsLoading(false);
       } catch (err) {

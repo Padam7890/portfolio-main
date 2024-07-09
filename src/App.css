@@ -876,7 +876,7 @@ main {
   #PORTFOLIO
 \*-----------------------------------*/
 
-.filter-list { display:none ; }
+.filter-list { display: none; }
 
 .filter-select-box {
   position: relative;
@@ -1357,7 +1357,7 @@ textarea.form-input::-webkit-resizer { display: none; }
     font-size: var(--fs-8);
   }
 
-  .info_more-btn ion-icon { display: none; }
+  .info_more-btn .arrowDown { display: none; }
 
   .separator { margin: 32px 0; }
 

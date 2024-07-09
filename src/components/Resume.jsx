@@ -25,6 +25,7 @@ if (error) {
   return <h1>{error.message}</h1>;
 }
 const resume = data?.resume;
+const skillPercentage = data?.skillPercentage;
 
 
 console.log(resume)
@@ -135,67 +136,29 @@ console.log(resume)
 
       <ul className="skills-list content-card">
 
-        <li className="skills-item">
+        {
+          skillPercentage.map(item=>(
+            <li className="skills-item">
 
-          <div className="title-wrapper">
-            <h5 className="h5">Web design</h5>
-            <data value="80">80%</data>
-          </div>
+            <div className="title-wrapper">
+              <h5 className="h5">{item.title}</h5>
+              <data value={`${item.percentage}`}>{item.percentage}</data>
+            </div>
+  
+            <div className="skill-progress-bg">
+              <div className="skill-progress-fill" 
+              style={{
+                  width:`${item.percentage}`
+              }}></div>
+            </div>
+  
+          </li>
+          ))
+        }
 
-          <div className="skill-progress-bg">
-            <div className="skill-progress-fill" 
-            style={{
-                width:"80%"
-            }}></div>
-          </div>
+     
 
-        </li>
-
-        <li className="skills-item">
-
-          <div className="title-wrapper">
-            <h5 className="h5">Graphic design</h5>
-            <data value="70">70%</data>
-          </div>
-
-          <div className="skill-progress-bg">
-            <div className="skill-progress-fill" style={{
-                width:"70%"
-            }}></div>
-          </div>
-
-        </li>
-
-        <li className="skills-item">
-
-          <div className="title-wrapper">
-            <h5 className="h5">Branding</h5>
-            <data value="90">90%</data>
-          </div>
-
-          <div className="skill-progress-bg">
-            <div className="skill-progress-fill" style={{
-                width:"90%"
-            }}></div>
-          </div>
-
-        </li>
-
-        <li className="skills-item">
-
-          <div className="title-wrapper">
-            <h5 className="h5">WordPress</h5>
-            <data value="50">50%</data>
-          </div>
-
-          <div className="skill-progress-bg">
-            <div className="skill-progress-fill" style={{
-                width:"50%"
-            }}></div>
-          </div>
-
-        </li>
-
+   
       </ul>
 
     </section> 
