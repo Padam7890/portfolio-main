@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { IoEye } from "react-icons/io5";
 import { useOutletContext } from "react-router";
 import { NavLink } from "react-router-dom";
+import http from "../config/http";
 
 const Portfolio = () => {
   const { data, isLoading, error } = useOutletContext();
@@ -27,8 +28,8 @@ const Portfolio = () => {
   const getPortfolio = async (category) => {
     try {
       setIsLoading(true);
-      const response = await axios.get(
-        `http://127.0.0.1:3000/api/portfolio/?category=${category}`
+      const response = await http.get(
+        `/api/portfolio/?category=${category}`
       );
       setPortfolio(response.data.data);
     } catch (error) {
