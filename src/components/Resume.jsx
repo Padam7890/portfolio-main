@@ -142,13 +142,13 @@ console.log(resume)
 
             <div className="title-wrapper">
               <h5 className="h5">{item.title}</h5>
-              <data value={`${item.percentage}`}>{item.percentage}</data>
+              <data value={`${item.percentage}`}>{item.percentage} %</data>
             </div>
   
             <div className="skill-progress-bg">
               <div className="skill-progress-fill" 
               style={{
-                  width:`${item.percentage}`
+                  width: `${item.percentage}%`
               }}></div>
             </div>
   

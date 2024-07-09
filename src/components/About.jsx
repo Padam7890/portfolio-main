@@ -23,7 +23,11 @@ const About = () => {
   }
 
   if (error) {
-    return <h1>{error.message}</h1>;
+    return <h1 style={{
+      textAlign: "center",
+      margin: "0 auto",
+      color: "white",
+    }}>{error.message}</h1>;
   }
 
   const personalInfo = data?.users[0];

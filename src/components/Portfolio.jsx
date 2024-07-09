@@ -11,6 +11,12 @@ const Portfolio = () => {
   const [portfolio, setPortfolio] = useState([]);
   const [Loading, setIsLoading] = useState(false);
   const [isActive, setIsActive] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("");
+
+  const handleClick = (category) => {
+    setActiveCategory(category);
+    getPortfolio(category);
+  };
 
   const toggleActive = () => {
     setIsActive(!isActive);
@@ -20,6 +26,7 @@ const Portfolio = () => {
 
   useEffect(() => {
     getPortfolio(""); 
+
 
   }, []);
 
@@ -48,8 +55,8 @@ const Portfolio = () => {
         <ul className="filter-list">
           <li className="filter-item">
             <button
-              onClick={() => getPortfolio("")}
-              className="active"
+              onClick={() => handleClick("")}
+              className={activeCategory === "" ? "active" : ""}
               data-filter-btn
             >
               All
@@ -58,7 +65,8 @@ const Portfolio = () => {
           {categories?.map((category) => (
             <li className="filter-item">
               <button
-                onClick={() => getPortfolio(category.name)}
+                onClick={() => handleClick(category.name)}
+                className={activeCategory === category.name ? "active" : ""}
                 data-filter-btn
               >
                 {category.name}
@@ -86,7 +94,7 @@ const Portfolio = () => {
             {categories?.map((category) => (
               <li className="select-item">
                 <button
-                  onClick={() => getPortfolio(category.name)}
+                  onClick={() => handleClick(category.name)}
                   data-select-item
                 >
                   {category.name}

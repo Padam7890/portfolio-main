@@ -1,48 +1,137 @@
-import React from 'react'
+import React, { useState } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup"; // Ensure correct import of Yup
+import http from "../config/http";
+import { FaPaperPlane } from "react-icons/fa";
 
 const Contact = () => {
+
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const validationSchema = Yup.object({
+    fullName: Yup.string().required('Name is required'),
+    emailAddress: Yup.string().email('Invalid email').required('Email is required'),
+    message: Yup.string().required('Message is required'),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      fullName: '',
+      emailAddress: '',
+      message: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      console.log(values);
+      sendingEmail(values);
+
+    },
+  });
+
+  const sendingEmail = async (value) => {
+    try {
+      setLoading(true);
+      const res = await http.post('/api/general/contact', value);
+      setMessage(res.data.msg);
+
+    } catch (error) {
+      console.log(error)
+      setMessage(error.response.data.msg ||  error.message);
+    }
+    finally{
+      setLoading(false)
+    }
+
+  }
+
+
+
+
   return (
     <>
       <article className="contact" data-page="contact">
+        <header>
+          <h2 className="h2 article-title">Contact</h2>
+        </header>
 
-<header>
-  <h2 className="h2 article-title">Contact</h2>
-</header>
+        <section className="mapbox" data-mapbox>
+          <figure>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14124.857378337512!2d85.34339779999999!3d27.741534050000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb194f84acc8eb%3A0x6b7e62199aff3c79!2sBansbari%2C%20Kathmandu%2044600!5e0!3m2!1sen!2snp!4v1720529051099!5m2!1sen!2snp"
+              width="400"
+              height="300"
+              loading="lazy"
+            ></iframe>
+          </figure>
+        </section>
 
-<section className="mapbox" data-mapbox>
-  <figure>
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d199666.5651251294!2d-121.58334177520186!3d38.56165006739519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x809ac672b28397f9%3A0x921f6aaa74197fdb!2sSacramento%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1647608789441!5m2!1sen!2sbd"
-      width="400" height="300" loading="lazy"></iframe>
-  </figure>
-</section>
+        <section className="contact-form">
+          <h3 className="h3 form-title">Contact Form</h3>
 
-<section className="contact-form">
+          <form className="form" onSubmit={formik.handleSubmit}>
+            <div className="input-wrapper">
+              <input
+                type="text"
+                name="fullName"
+                className="form-input"
+                placeholder="Full name"
+                onChange={formik.handleChange}
+                value={formik.values.fullName}
+                onBlur={formik.handleBlur}
+                required
+                data-form-input
+              />
+             
 
-  <h3 className="h3 form-title">Contact Form</h3>
+              <input
+                type="emailAddress"
+                name="emailAddress"
+                className="form-input"
+                placeholder="Email address"
+                onChange={formik.handleChange}
+                value={formik.values.emailAddress}
+                onBlur={formik.handleBlur}
+                required
+                data-form-input
+              />
+             
+            </div>
 
-  <form action="#" className="form" data-form>
+          
 
-    <div className="input-wrapper">
-      <input type="text" name="fullname" className="form-input" placeholder="Full name" required data-form-input/>
+            <textarea
+              name="message"
+              className="form-input"
+              placeholder="Your Message"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.message}
+              required
+              data-form-input
+            />
+          
 
-      <input type="email" name="email" className="form-input" placeholder="Email address" required data-form-input/>
-    </div>
+            <button className="form-btn" type="submit" data-form-btn>
+              <FaPaperPlane name="paper-plane"></FaPaperPlane>
+              <span>
 
-    <textarea name="message" className="form-input" placeholder="Your Message" required data-form-input></textarea>
-
-    <button className="form-btn" type="submit" disabled data-form-btn>
-      <ion-icon name="paper-plane"></ion-icon>
-      <span>Send Message</span>
-    </button>
-
-  </form>
-
-</section>
-
-</article>
+                {
+                  loading ? "Sending Message Wait ...": "Send Message "
+                }
+          
+              </span>
+            </button>
+            <div style={{
+              color: "white"
+            }}>
+              {message}
+            </div>
+          </form>
+        </section>
+      </article>
     </>
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;
