@@ -5,6 +5,7 @@ import Resume from "../components/Resume";
 import Portfolio from "../components/Portfolio";
 import Blog from "../components/Blog";
 import Contact from "../components/Contact";
+import NotFoundPage from "../components/404";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,12 @@ const router = createBrowserRouter([
         element: <Contact />,
       },
     ],
+   
   },
+  {
+    path:"*",
+    element:<NotFoundPage/>
+  }
 ]);
 
 export { router };
